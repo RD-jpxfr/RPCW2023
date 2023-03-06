@@ -12,6 +12,8 @@ http.createServer(function(req, res){
     var d = new Date().toISOString().substring(0, 16)
     console.log(req.method + " " + req.url + " " + d)
     var dicURL = url.parse(req.url, true)
+    var parsedpath = dicURL.pathname.split("/")
+
 
     if(dicURL.pathname == "/"){
         axios.get("http://localhost:3000/pessoas")
@@ -23,7 +25,22 @@ http.createServer(function(req, res){
             .catch( error => {
                 console.log("Erro: " + error)
                 res.writeHead(200, {'Content-Type': 'text/html; charset=utf-8'})
-                res.end("ERRO: " + erro)
+                res.end("ERRO: " + error)
+            })
+    }
+    else if(parsedpath[1] == "pessoas"){
+        path = "http://localhost:3000/pessoas/" + parsedpath[2]
+        console.log(path)
+        axios.get(path)
+            .then( function(resp){
+                var pessoas = resp.data
+                res.writeHead(200, {'Content-Type': 'text/html; charset=utf-8'})
+                res.end(mypages.pessoaInfo(pessoas))
+            })
+            .catch( error => {
+                console.log("Erro: " + error)
+                res.writeHead(200, {'Content-Type': 'text/html; charset=utf-8'})
+                res.end("ERRO: " + error)
             })
     }
     else if(dicURL.pathname == "/w3.css"){
