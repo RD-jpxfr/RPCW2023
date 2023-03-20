@@ -1,0 +1,136 @@
+extends layout
+
+block content
+  .container
+    form(action="/" method="POST")
+      .main_panel
+        textarea(
+          id="description" 
+          name="description" 
+          placeholder="Descrição da tarefa..."
+          style={"height": "270px", "width": "95%"} 
+          required="true"
+        )
+      .side_panel
+        p Tipo da tarefa
+        div
+          select(id="categoria" name="categoria" required="true")
+            option(value="" selected disabled hidden) Selecione uma das opções
+            option(value="universidade") Universidade
+            option(value="doméstico") Doméstico
+            option(value="hobby") Hobby
+            option(value="side project") Side Project
+        p Pessoa a cumprir a tarefa
+        .ator
+          input(
+            type="text" 
+            id="ator" 
+            name="ator" 
+            required="true" 
+            placeholder="Nome da pessoa..."
+          )
+        .data
+          p Data Limite
+          input(
+            type="date" 
+            id="data_limite" 
+            name="data_limite" 
+            required="true"
+          )
+      .row
+        input(
+          type="submit" 
+          value="Registar"
+        )
+  div
+    .div_central(style={"float":"left"})
+      p(style={"text-align":"center"}) Tarefas Por Fazer
+      .container
+        .tasks(id="tasks")
+          table
+            colgroup
+              col(span="1" style={"width": "20%"})
+              col(span="1" style={"width": "8%"})
+              col(span="1" style={"width": "8%"})
+              col(span="1" style={"width": "10%"})
+              col(span="1" style={"width": "10%"})
+            tbody
+              tr
+                th(style={"text-align": "center"}) Descrição
+                th(style={"text-align": "center"}) Categoria
+                th(style={"text-align": "center"}) Ator
+                th(style={"text-align": "center"}) Data Limite
+                th
+
+              each t in tasksPF
+                .item( id= t.id)
+                  tr( style={"height":"50px"})
+                    td= t.description
+                    td(style={"text-align": "center"})= t.categoria
+                    td(style={"text-align": "center"})= t.ator
+                    td(style={"text-align": "center"})= t.data_limite
+
+                    td(style={"text-align": "right"})
+                      div
+                        form(action="/tarefas/edit" method="POST" style={"display": "inline-block"})
+                          input(
+                            type="hidden" 
+                            name="id" 
+                            value= t.id
+                          )
+                          button(type="submit" style={"height": "40px", "border-radius":"70%", "outline": "none"}) 
+                            img(src="images/edit.png" style={"width":"100%", "float":"center", "text-align": "center"})
+                        form(action="/tarefas/delete" method="POST" style={"display": "inline-block"})
+                          input(
+                            type="hidden" 
+                            name="id" 
+                            value= t.id
+                          )
+                          button(type="submit" style={"height": "40px", "border-radius":"70%", "outline": "none"})
+                            img(src="images/trash.png" style={"width":"100%", "float":"center", "text-align": "center"})
+                        form(action="/tarefas/completa" method="POST" style={"display":"inline-block"})
+                          input(
+                            type="hidden" 
+                            name="id" 
+                            value= t.id
+                          )
+                          button(type="submit" style={"height": "40px", "border-radius":"70%", "outline": "none"})
+                            img(src="images/checkmark.png" style={"width":"100%", "float":"center", "text-align": "center"})
+
+    .div_central(style={"float":"right"})
+      p(style={"text-align":"center"}) Tarefas Feitas
+      .container
+        .tasks(id="tasksF")
+          table
+            colgroup
+              col(span="1" style={"width": "25%"})
+              col(span="1" style={"width": "8%"})
+              col(span="1" style={"width": "8%"})
+              col(span="1" style={"width": "10%"})
+              col(span="1" style={"width": "5%"})
+            tbody
+              tr
+                th(style={"text-align":"center"}) Descrição
+                th(style={"text-align":"center"}) Categoria
+                th(style={"text-align":"center"}) Ator
+                th(style={"text-align":"center"}) Data Limite
+                th
+
+              each t in tasksF
+                .item(id= t.id)
+                  tr(style={"height":"50px"})
+                    td(style={"width":"5%"})= t.description
+                    td(style={"width":"10%", "text-align":"center"})= t.categoria
+                    td(style={"width":"1%", "text-align":"center"})= t.ator
+                    td(style={"width":"5%", "text-align":"center"})= t.data_limite
+
+                    td(style={"text-align":"right", "width": "5%"})
+                      div(style={"float":"right"})
+                        form(action="/tarefas/delete" method="POST" style={"display":"inline-block"})
+                          input(
+                            type="hidden" 
+                            name="id" 
+                            value= t.id
+                          )
+                          button(style={"height": "40px", "border-radius":"70%", "outline": "none"} onclick="myFunction()")
+                            img(src="images/trash.png" style={"width":"100%", "float":"center", "text-align": "center"})

@@ -1,0 +1,31 @@
+{
+  "tarefas": [
+    {
+      "id": 0,
+      "description": "exemplo de query",
+      "categoria": "universidade",
+      "ator": "Rui Dias",
+      "data_limite": "2023-03-10",
+      "data_post": "2023-03-10T15:48",
+      "type": "exemplo"
+    },
+    {
+      "description": "Isto é o exemplo de uma tarefa",
+      "categoria": "universidade",
+      "ator": "Rui Dias",
+      "data_limite": "2023-03-10",
+      "data_post": "2023-03-10",
+      "type": "realizada",
+      "id": 1
+    },
+    {
+      "description": "Isto é uma tarefa por realizar",
+      "categoria": "hobby",
+      "ator": "Rui Dias",
+      "data_limite": "2023-03-23",
+      "data_post": "2023-03-12",
+      "type": "porfazer",
+      "id": 2
+    }
+  ]
+}
